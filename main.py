@@ -3,7 +3,7 @@ from flask import Flask, request, make_response, redirect, render_template
 app = Flask(__name__)  # Instancia de la app
 
 
-todos = ['todo1', 'todo2', 'todo3']
+todos = ['Comprar leche', 'Hacer todo de vuelta', 'Pasar el curso de flask']
 
 # Generar cookies de un usuario
 
