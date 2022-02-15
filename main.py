@@ -1,14 +1,19 @@
-from flask import Flask, request, make_response, redirect
+from flask import Flask, request, make_response, redirect, render_template
 
 app = Flask(__name__)  # Instancia de la app
 
 
+todos = ['todo1', 'todo2', 'todo3']
+
 # Generar cookies de un usuario
+
+
 @app.route('/')
 def index():
     userIp = request.remote_addr  # remote_addr -> Trae el ip del usuario
-    response = make_response(redirect('/hello')) # Redirecciona a la ruta hello
-    response.set_cookie('userIp', userIp) # vamos a regresar la ip del usuario
+    # Redirecciona a la ruta hello
+    response = make_response(redirect('/hello'))
+    response.set_cookie('userIp', userIp)  # vamos a regresar la ip del usuario
 
     return response
 
@@ -16,7 +21,14 @@ def index():
 @app.route('/hello')  # Ruta de acceso con un decorador
 def hello():
     userIp = request.cookies.get('userIp')
-    return f'Tu ip es: {userIp}'
+    context = {
+        'userIp': userIp,
+        'todos': todos
+    }
+    return render_template('hello.html', **context)  # doble asterisco expande todas las variables
+
+
+# Estructuta de Control
 
 
 # Debug del servidor
