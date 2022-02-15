@@ -1,11 +1,23 @@
-from flask import Flask, request, make_response, redirect, render_template
+from logging import exception
+from flask import Flask, request, make_response, redirect, render_template, abort
 
 app = Flask(__name__)  # Instancia de la app
 
 
 todos = ['Comprar leche', 'Hacer todo de vuelta', 'Pasar el curso de flask']
 
-# Generar cookies de un usuario
+
+""" Manejos de errores"""
+
+
+@app.errorhandler(404)
+def not_found(error):
+    return render_template('404.html', error=error)
+
+
+@app.errorhandler(500)
+def not_found(error):
+    return render_template('500.html', error=error) # se debe usar una variable abort o que nada funcione
 
 
 @app.route('/')
@@ -25,10 +37,8 @@ def hello():
         'userIp': userIp,
         'todos': todos
     }
-    return render_template('hello.html', **context)  # doble asterisco expande todas las variables
-
-
-# Estructuta de Control
+    # doble asterisco expande todas las variables
+    return render_template('hello.html', **context)
 
 
 # Debug del servidor
