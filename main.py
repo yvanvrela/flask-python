@@ -41,6 +41,6 @@ def hello():
     return render_template('hello.html', **context)
 
 
-# Debug del servidor
-if __name__ == '__main__':
-    app.run(host='localhost', port=4000, debug=True)
+# # Debug del servidor
+# if __name__ == '__main__':
+#     app.run(host='localhost', port=4000, debug=True)
