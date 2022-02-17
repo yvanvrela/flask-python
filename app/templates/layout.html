@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../static/css/main.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
+    <script src="../static/js/scripts.js"></script>
     <title>
         {% block title %}
         Flask |
@@ -20,6 +21,20 @@
         <div class="hero-head">
             {% include 'navbar.html'  %}
         </div>
+
+        {% for message in get_flashed_messages() %}
+        <br>
+
+        {% if message == 'Nombre de usuario guardado!' %}
+
+        <div class="notification is-primary">
+            <button class="delete"></button>
+            {{ message }}
+        </div>
+
+        {% endif %}
+
+        {% endfor %}
 
         <div class="hero-body has-background-light">
             <div class="container">

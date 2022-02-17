@@ -1,5 +1,5 @@
 from logging import exception
-from flask import Flask, request, make_response, redirect, render_template, abort, session, url_for
+from flask import Flask, request, make_response, redirect, render_template, abort, session, url_for, flash
 from flask_wtf import FlaskForm
 from wtforms.fields import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired
@@ -37,11 +37,10 @@ def not_found(error):
 
 @app.route('/')
 def index():
-    userIp = request.remote_addr  # remote_addr -> Trae el ip del usuario
+
     # Redirecciona a la ruta hello
-    response = make_response(redirect('/hello'))
+    response = make_response(redirect('/login'))
     # response.set_cookie('userIp', userIp)  # vamos a regresar la ip del usuario
-    session['userIp'] = userIp
 
     return response
 
@@ -50,27 +49,39 @@ def index():
 @app.route('/hello', methods=['GET', 'POST'])
 def hello():
     userIp = session.get('userIp')  # Guardar variables encriptadas
-    loginForm = LoginForm()
     username = session.get('username')
-    
 
     # Diccionario de retorno de los datos
     context = {
         'userIp': userIp,
-        'todos': todos,
-        'loginForm': loginForm,
+        'todos': todos,  # lista de tareas
         'username': username
     }
-
-    if loginForm.validate_on_submit():  # Detecta el submit y lo valida
-        username = loginForm.username.data # .data solo para traer el contenido, o sino trae el input
-        session['username'] = username
-        return redirect(url_for('index'))
 
     # doble asterisco expande todas las variables
     return render_template('hello.html', **context)
 
 
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    userIp = request.remote_addr  # remote_addr -> Trae el ip del usuario
+    session['userIp'] = userIp
+
+    loginForm = LoginForm()
+
+    context = {
+        'loginForm': loginForm
+    }
+
+    if loginForm.validate_on_submit():
+        username = loginForm.username.data
+        session['username'] = username
+
+        flash('Nombre de usuario guardado!')
+        return redirect(url_for('hello'))
+
+    return render_template('login.html', **context)
+
 # # Debug del servidor
-if __name__ == '__main__':
+# if __name__ == '__main__':
     app.run(host='localhost', port=4000, debug=True)
