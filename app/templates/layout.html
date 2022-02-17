@@ -6,21 +6,55 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/css/main.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
     <title>
         {% block title %}
-        Flask | 
+        Flask |
         {% endblock %}
     </title>
 </head>
 
 <body>
-    <header>
-        {% include 'navbar.html' %}
-    </header>
+    <section class="hero is-light is-large">
+        <div class="hero-head">
+            {% include 'navbar.html'  %}
+        </div>
 
-    {% block content %}
+        <div class="hero-body has-background-light">
+            <div class="container">
+                {% block content %}
+                {% endblock %}
+            </div>
+        </div>
 
-    {% endblock %}
+        <div class="hero-foot has-background-black-bis">
+            <nav class="tabs is-boxed is-fullwidth">
+                <div class="container has-text-light">
+                    <ul>
+                        <li class="is-active">
+                            <a>Overview</a>
+                        </li>
+                        <li>
+                            <a>Modifiers</a>
+                        </li>
+                        <li>
+                            <a>Grid</a>
+                        </li>
+                        <li>
+                            <a>Elements</a>
+                        </li>
+                        <li>
+                            <a>Components</a>
+                        </li>
+                        <li>
+                            <a>Layout</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </section>
 </body>
 
 </html>
