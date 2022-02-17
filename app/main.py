@@ -1,8 +1,9 @@
 from logging import exception
-from flask import Flask, request, make_response, redirect, render_template, abort
+from flask import Flask, request, make_response, redirect, render_template, abort, session
 
 app = Flask(__name__)  # Instancia de la app
 
+app.config['SECRET_KEY'] = 'SECRETO'
 
 todos = ['Comprar leche', 'Hacer todo de vuelta', 'Pasar el curso de flask']
 
@@ -25,14 +26,15 @@ def index():
     userIp = request.remote_addr  # remote_addr -> Trae el ip del usuario
     # Redirecciona a la ruta hello
     response = make_response(redirect('/hello'))
-    response.set_cookie('userIp', userIp)  # vamos a regresar la ip del usuario
+    #response.set_cookie('userIp', userIp)  # vamos a regresar la ip del usuario
+    session['userIp'] = userIp
 
     return response
 
 
 @app.route('/hello')  # Ruta de acceso con un decorador
 def hello():
-    userIp = request.cookies.get('userIp')
+    userIp = session.get('userIp') # Guardar variables encriptadas
     context = {
         'userIp': userIp,
         'todos': todos
