@@ -6,9 +6,13 @@
 Bienvenido
 {% endblock %}
 
-
-
 {% block content %}
+
+{% if username %}
+<h1 class="title">
+    Bienvenido, {{ username | capitalize }}
+</h1>
+{% endif %}
 
 {% if userIp %}
 <h1>

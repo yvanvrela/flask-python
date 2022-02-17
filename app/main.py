@@ -1,5 +1,5 @@
 from logging import exception
-from flask import Flask, request, make_response, redirect, render_template, abort, session
+from flask import Flask, request, make_response, redirect, render_template, abort, session, url_for
 from flask_wtf import FlaskForm
 from wtforms.fields import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired
@@ -7,6 +7,7 @@ from wtforms.validators import DataRequired
 app = Flask(__name__)  # Instancia de la app
 
 app.config['SECRET_KEY'] = 'SECRETO'
+app.config['WTF_CSRF_ENABLED'] = False
 
 todos = ['Comprar leche', 'Hacer todo de vuelta', 'Pasar el curso de flask']
 
@@ -50,11 +51,22 @@ def index():
 def hello():
     userIp = session.get('userIp')  # Guardar variables encriptadas
     loginForm = LoginForm()
+    username = session.get('username')
+    
+
+    # Diccionario de retorno de los datos
     context = {
         'userIp': userIp,
         'todos': todos,
-        'loginForm': loginForm
+        'loginForm': loginForm,
+        'username': username
     }
+
+    if loginForm.validate_on_submit():  # Detecta el submit y lo valida
+        username = loginForm.username.data # .data solo para traer el contenido, o sino trae el input
+        session['username'] = username
+        return redirect(url_for('index'))
+
     # doble asterisco expande todas las variables
     return render_template('hello.html', **context)
 
