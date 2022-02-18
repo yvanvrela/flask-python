@@ -1,8 +1,10 @@
-from logging import exception
+from ast import If
+from re import A
 from flask import Flask, request, make_response, redirect, render_template, abort, session, url_for, flash
 from flask_wtf import FlaskForm
 from wtforms.fields import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired
+import unittest
 
 app = Flask(__name__)  # Instancia de la app
 
@@ -19,6 +21,17 @@ class LoginForm(FlaskForm):
                            DataRequired()])  # Validar los datos
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Enviar')
+
+
+""" Comandos de testing """
+
+
+@app.cli.command()
+def test():
+    tests = unittest.TestLoader().discover('tests')
+    unittest.TextTestRunner().run(tests)
+    
+    
 
 
 """ Manejos de errores"""
