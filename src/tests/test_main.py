@@ -27,7 +27,12 @@ class MainTest(TestCase):
         # Compara si la redireccion es igual al response
         self.assertRedirects(response, url_for('login'))
 
-    def testLoginPost(self):
+    def testLoginGet(self): # Carga la pagina login
+        response = self.client.get(url_for('login'))
+
+        self.assert200(response)
+
+    def testLoginPost(self): # Si envia los datos al login
         fakeForm = {
             'username': 'fake',
             'password': 'fakePassword'
