@@ -1,15 +1,11 @@
-from ast import If
-from re import A
 from flask import Flask, request, make_response, redirect, render_template, abort, session, url_for, flash
 from flask_wtf import FlaskForm
 from wtforms.fields import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired
 import unittest
+from app import create_app
 
-app = Flask(__name__)  # Instancia de la app
-
-app.config['SECRET_KEY'] = 'SECRETO'
-app.config['WTF_CSRF_ENABLED'] = False
+app = create_app()
 
 todos = ['Comprar leche', 'Hacer todo de vuelta', 'Pasar el curso de flask']
 

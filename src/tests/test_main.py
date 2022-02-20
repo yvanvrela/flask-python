@@ -3,7 +3,7 @@ from urllib.request import urlretrieve
 from flask_testing import TestCase
 from flask import current_app, url_for  # la app que ejecutamos
 
-from src.main import app
+from main import app
 
 
 # se crea una clase que extiende TestCase
