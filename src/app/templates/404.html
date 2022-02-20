@@ -1,0 +1,15 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+{{ super() }}
+404
+{% endblock %}
+
+{% block content %}
+<h1>
+    Página no encontrada
+</h1>
+<p>
+    error: {{ error }}
+</p>
+{% endblock %}
