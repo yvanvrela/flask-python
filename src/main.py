@@ -1,22 +1,12 @@
-from flask import Flask, request, make_response, redirect, render_template, abort, session, url_for, flash
-from flask_wtf import FlaskForm
-from wtforms.fields import StringField, PasswordField, SubmitField
-from wtforms.validators import DataRequired
+from flask import request, make_response, redirect, render_template, abort, session, url_for, flash
 import unittest
 from app import create_app
+from app.forms import LoginForm
+
 
 app = create_app()
 
 todos = ['Comprar leche', 'Hacer todo de vuelta', 'Pasar el curso de flask']
-
-# Clase para los login
-
-
-class LoginForm(FlaskForm):
-    username = StringField('Nombre de usuario', validators=[
-                           DataRequired()])  # Validar los datos
-    password = PasswordField('Password', validators=[DataRequired()])
-    submit = SubmitField('Enviar')
 
 
 """ Comandos de testing """
@@ -26,8 +16,6 @@ class LoginForm(FlaskForm):
 def test():
     tests = unittest.TestLoader().discover('tests')
     unittest.TextTestRunner().run(tests)
-    
-    
 
 
 """ Manejos de errores"""
