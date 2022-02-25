@@ -15,6 +15,6 @@ def login():
         session['username'] = username
 
         flash('Nombre de usuario guardado!')
-        return redirect(url_for('index'))
+        return redirect(url_for('hello'))
 
     return render_template('login.html', **context)
