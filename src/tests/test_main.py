@@ -1,5 +1,3 @@
-from urllib import response
-from urllib.request import urlretrieve
 from flask_testing import TestCase
 from flask import current_app, url_for  # la app que ejecutamos
 
@@ -27,12 +25,12 @@ class MainTest(TestCase):
         # Compara si la redireccion es igual al response
         self.assertRedirects(response, url_for('login'))
 
-    def testLoginGet(self): # Carga la pagina login
+    def testLoginGet(self):  # Carga la pagina login
         response = self.client.get(url_for('login'))
 
         self.assert200(response)
 
-    def testLoginPost(self): # Si envia los datos al login
+    def testLoginPost(self):  # Si envia los datos al login
         fakeForm = {
             'username': 'fake',
             'password': 'fakePassword'
@@ -40,3 +38,18 @@ class MainTest(TestCase):
         response = self.client.post(url_for('login'), data=fakeForm)
 
         self.assertRedirects(response, url_for('hello'))
+
+    def test_auth_blueprints_exists(self):  # Si existe blueprint
+        self.assertIn('auth', self.app.blueprints)
+
+    def test_auth_login_get(self):
+        # Llamamos a login desde auth
+        response = self.client.get(url_for('auth.login'))
+
+        self.assert200(response)
+
+    def test_auth_login_template(self):
+        # verificamos si trae el template de login
+        self.client.get(url_for('auth.login'))
+
+        self.assertTemplateUsed('login.html')
