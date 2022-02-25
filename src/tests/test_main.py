@@ -1,3 +1,4 @@
+from urllib import response
 from flask_testing import TestCase
 from flask import current_app, url_for  # la app que ejecutamos
 
@@ -23,21 +24,12 @@ class MainTest(TestCase):
         response = self.client.get(url_for('index'))
 
         # Compara si la redireccion es igual al response
-        self.assertRedirects(response, url_for('login'))
+        self.assertRedirects(response, url_for('auth.login'))
 
-    def testLoginGet(self):  # Carga la pagina login
-        response = self.client.get(url_for('login'))
+    def test_hello_post(self):
+        response = self.client.post(url_for('hello'))
 
-        self.assert200(response)
-
-    def testLoginPost(self):  # Si envia los datos al login
-        fakeForm = {
-            'username': 'fake',
-            'password': 'fakePassword'
-        }
-        response = self.client.post(url_for('login'), data=fakeForm)
-
-        self.assertRedirects(response, url_for('hello'))
+        self.assertTrue(response.status_code, 405)
 
     def test_auth_blueprints_exists(self):  # Si existe blueprint
         self.assertIn('auth', self.app.blueprints)
@@ -53,3 +45,12 @@ class MainTest(TestCase):
         self.client.get(url_for('auth.login'))
 
         self.assertTemplateUsed('login.html')
+
+    def test_auth_login_post(self):
+        fakeForm ={
+            'username': 'fake',
+            'password': 'pass'
+        }
+        response= self.client.post(url_for('auth.login'), data = fakeForm)
+
+        self.assertRedirects(response, url_for('index'))

@@ -36,14 +36,14 @@ def not_found(error):
 def index():
 
     # Redirecciona a la ruta hello
-    response = make_response(redirect('/login'))
+    response = make_response(redirect('auth/login'))
     # response.set_cookie('userIp', userIp)  # vamos a regresar la ip del usuario
 
     return response
 
 
 # Ruta de acceso con un decorador
-@app.route('/hello', methods=['GET', 'POST'])
+@app.route('/hello', methods=['GET'])
 def hello():
     userIp = session.get('userIp')  # Guardar variables encriptadas
     username = session.get('username')
@@ -59,25 +59,6 @@ def hello():
     return render_template('hello.html', **context)
 
 
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    userIp = request.remote_addr  # remote_addr -> Trae el ip del usuario
-    session['userIp'] = userIp
-
-    loginForm = LoginForm()
-
-    context = {
-        'loginForm': loginForm
-    }
-
-    if loginForm.validate_on_submit():
-        username = loginForm.username.data
-        session['username'] = username
-
-        flash('Nombre de usuario guardado!')
-        return redirect(url_for('hello'))
-
-    return render_template('login.html', **context)
 
 # # Debug del servidor
 # if __name__ == '__main__':
