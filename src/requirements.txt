@@ -4,3 +4,4 @@ flask-testing
 blinker
 mysqlclient
 flask-SQLAlchemy
+firebase-admin
