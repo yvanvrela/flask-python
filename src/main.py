@@ -1,12 +1,10 @@
 from flask import request, make_response, redirect, render_template, abort, session, url_for, flash
 import unittest
 from app import create_app
-from app.forms import LoginForm
+from app.firestone_service import get_users, get_todos
 
 
 app = create_app()
-
-todos = ['Comprar leche', 'Hacer todo de vuelta', 'Pasar el curso de flask']
 
 
 """ Comandos de testing """
@@ -51,9 +49,16 @@ def hello():
     # Diccionario de retorno de los datos
     context = {
         'userIp': userIp,
-        'todos': todos,  # lista de tareas
+        'todos': get_todos(user_id=username),  # lista de tareas
         'username': username
     }
+
+
+    users = get_users()
+
+    for user in users: 
+        print(user.id)
+
 
     # doble asterisco expande todas las variables
     return render_template('hello.html', **context)
