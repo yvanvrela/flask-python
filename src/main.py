@@ -53,7 +53,6 @@ def hello():
         'username': username
     }
 
-
     users = get_users()
 
     for user in users: 
