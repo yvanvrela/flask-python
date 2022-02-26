@@ -53,12 +53,6 @@ def hello():
         'username': username
     }
 
-    users = get_users()
-
-    for user in users: 
-        print(user.id)
-
-
     # doble asterisco expande todas las variables
     return render_template('hello.html', **context)
 
