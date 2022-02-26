@@ -5,3 +5,4 @@ blinker
 mysqlclient
 flask-SQLAlchemy
 firebase-admin
+flask-login

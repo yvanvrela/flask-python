@@ -1,7 +1,8 @@
-from flask import request, make_response, redirect, render_template, abort, session, url_for, flash
 import unittest
+from flask import request, make_response, redirect, render_template, abort, session, url_for, flash
 from app import create_app
-from app.firestone_service import get_users, get_todos
+from app.firestone_service import get_todos
+from flask_login import login_required, current_user
 
 
 app = create_app()
@@ -42,11 +43,13 @@ def index():
 
 # Ruta de acceso con un decorador
 @app.route('/hello', methods=['GET'])
+@login_required  # Autenticacion del login
 def hello():
     userIp = session.get('userIp')  # Guardar variables encriptadas
-    username = session.get('username')
+    user_id = current_user.id
+    username = current_user.username
 
-    # Diccionario de retorno de los datos
+    # Diccionario de retorno de los datos a la pagina
     context = {
         'userIp': userIp,
         'todos': get_todos(user_id=username),  # lista de tareas
@@ -55,7 +58,6 @@ def hello():
 
     # doble asterisco expande todas las variables
     return render_template('hello.html', **context)
-
 
 
 # # Debug del servidor
