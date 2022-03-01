@@ -52,7 +52,7 @@ def hello():
     # Diccionario de retorno de los datos a la pagina
     context = {
         'userIp': userIp,
-        'todos': get_todos(user_id=username),  # lista de tareas
+        'todos': get_todos(user_id=user_id),  # lista de tareas
         'username': username
     }
 
