@@ -25,14 +25,11 @@
         {% for message in get_flashed_messages() %}
         <br>
 
-        {% if message == 'Nombre de usuario guardado!' %}
-
         <div class="notification is-primary">
             <button class="delete"></button>
             {{ message }}
         </div>
 
-        {% endif %}
 
         {% endfor %}
 

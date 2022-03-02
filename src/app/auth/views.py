@@ -1,5 +1,6 @@
+from multiprocessing import context
 from flask import render_template, redirect, url_for, flash, session
-from flask_login import login_user
+from flask_login import login_required, login_user, logout_user
 from app.models import UserData, UserModel
 from . import auth
 from app.forms import LoginForm
@@ -40,3 +41,25 @@ def login():
             flash('El usuario no existe')
 
     return render_template('login.html', **context)
+
+
+@auth.route('logout')
+@login_required
+def logout():
+    logout_user()
+    flash('Hasta Luego')
+
+    return redirect(url_for('auth.login'))
+
+
+@auth.route('signup', methods=['GET', 'POST'])
+def signup():
+    signup_form = LoginForm()
+    context = {
+        'signup_form': signup_form
+    }
+
+    # TODO: filtro para saber si no hay datos iguales
+    # TODO: crear hash del password
+
+    return render_template('signup.html', **context)

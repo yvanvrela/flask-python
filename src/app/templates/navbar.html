@@ -12,21 +12,12 @@
         </div>
         <div id="navbarMenuHeroB" class="navbar-menu has-text-light">
             <div class="navbar-end">
-                <a class="navbar-item is-active">
-                    Home
-                </a>
-                <a class="navbar-item">
-                    Examples
-                </a>
-                <a class="navbar-item">
-                    Documentation
-                </a>
                 <span class="navbar-item">
-                    <a class="button is-info is-inverted">
+                    <a class="button is-info is-inverted" href="{{ url_for('auth.logout') }}">
                         <span class="icon">
-                            <i class="fab fa-github"></i>
+                            <i class="fas fa-sign-out-alt"></i>
                         </span>
-                        <span>Download</span>
+                        <span>Exit</span>
                     </a>
                 </span>
             </div>

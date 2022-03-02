@@ -2,19 +2,24 @@
 
 {% block title %}
 {{ super() }}
-Login
+Signup
 {% endblock %}
 
 {% block content %}
 
 <div class="container">
-    <form action="{{ url_for('auth.login') }}" method="POST">
+
+    <h1 class="title">
+        Registrarse
+    </h1>
+
+    <form action="{{ url_for('auth.signup') }}" method="POST">
 
         <div class="field">
 
             <p class="control has-icons-left has-icons-right">
 
-                {{ loginForm.username(class='input', placeholder='Usuario') }}
+                {{ signup_form.username(class='input', placeholder='Usuario') }}
 
                 <span class="icon is-small is-left">
                     <i class="fas fa-user"></i>
@@ -25,7 +30,7 @@ Login
         <div class="field">
             <p class="control has-icons-left">
 
-                {{ loginForm.password(class='input', placeholder='Contraseña') }}
+                {{ signup_form.password(class='input', placeholder='Contraseña') }}
 
                 <span class="icon is-small is-left">
                     <i class="fas fa-lock"></i>
@@ -33,13 +38,7 @@ Login
             </p>
         </div>
 
-        <a href="{{ url_for('auth.signup') }}">
-            <p class="p-auto subtitle is-size-6 is-black level-right">
-                Registrarse
-            </p>
-        </a>
-
-        {{ loginForm.submit(class="button is-success") }}
+        {{ signup_form.submit(class="button is-link") }}
 
     </form>
 </div>
