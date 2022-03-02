@@ -59,7 +59,22 @@ def signup():
         'signup_form': signup_form
     }
 
-    # TODO: filtro para saber si no hay datos iguales
+    if signup_form.validate_on_submit():
+        username = signup_form.username.data
+        password = signup_form.password.data
+
+        user_doc = get_user(username)
+
+        if user_doc is None:
+            if user_doc.to_dict()['username'] == username:
+                flash('Nombre de Usuario ya resgistrado!', category='warning')
+                pass
+            else:
+                # TODO: agregar a la base de datos
+                pass
+
+
+
     # TODO: crear hash del password
 
     return render_template('signup.html', **context)
