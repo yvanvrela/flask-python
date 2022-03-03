@@ -1,10 +1,19 @@
+from hashlib import sha256
+import uuid
 from multiprocessing import context
-from flask import render_template, redirect, url_for, flash, session
-from flask_login import login_required, login_user, logout_user
-from app.models import UserData, UserModel
+from flask import (
+    render_template, redirect, url_for, flash
+)
+from flask_login import (
+    login_required, login_user, logout_user
+)
+from werkzeug.security import generate_password_hash
+from app.models import (
+    UserData, UserModel
+)
 from . import auth
 from app.forms import LoginForm
-from app.firestone_service import get_user
+from app.firestone_service import get_user, user_put
 
 
 @auth.route('/login', methods=['GET', 'POST'])
@@ -66,14 +75,21 @@ def signup():
         user_doc = get_user(username)
 
         if user_doc is None:
-            if user_doc.to_dict()['username'] == username:
-                flash('Nombre de Usuario ya resgistrado!', category='warning')
-                pass
-            else:
-                # TODO: agregar a la base de datos
-                pass
+            # Genera un id aleatorio
+            user_id = uuid.uuid4()
+            password_hash = generate_password_hash(password, sha256)
+            user_data = UserData(user_id, username, password_hash)            
+            user_put(user_data)
 
+            user = UserModel(user_data)
 
+            login_user(user)
+
+            flash('Bienvenido!')
+
+            return redirect(url_for('hello'))
+        else:
+            flash('El usuario ya existe')
 
     # TODO: crear hash del password
 

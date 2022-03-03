@@ -1,5 +1,7 @@
 import unittest
-from flask import request, make_response, redirect, render_template, abort, session, url_for, flash
+from flask import(
+    make_response, redirect, render_template
+)
 from app import create_app
 from app.firestone_service import get_todos
 from flask_login import login_required, current_user

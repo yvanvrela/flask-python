@@ -1,3 +1,4 @@
+import uuid
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
@@ -35,3 +36,15 @@ def get_todos(user_id) -> list:
     return db.collection('users')\
         .document(user_id)\
         .collection('todos').get()
+
+
+# Agrega un nuevo usuario
+def user_put(user_data) -> None:
+    """ Recibe UserData, extaer los datos del usuario y los envia a la base de datos """
+    user_ref = db.collection('users').collection(user_data.user_id)
+    user_ref.set(
+        {
+            'username': user_data.username,
+            'password': user_data.password
+        }
+    )
