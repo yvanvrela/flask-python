@@ -76,8 +76,8 @@ def signup():
 
         if user_doc is None:
             # Genera un id aleatorio
-            user_id = uuid.uuid4()
-            password_hash = generate_password_hash(password, sha256)
+            user_id = str(uuid.uuid4())
+            password_hash = generate_password_hash(password)
             user_data = UserData(user_id, username, password_hash)            
             user_put(user_data)
 
@@ -91,6 +91,6 @@ def signup():
         else:
             flash('El usuario ya existe')
 
-    # TODO: crear hash del password
+    
 
     return render_template('signup.html', **context)
