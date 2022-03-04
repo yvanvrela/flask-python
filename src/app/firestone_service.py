@@ -13,6 +13,7 @@ def get_users() -> list:
     """ Devuelve todos los usuarios """
     return db.collection('users').get()
 
+
 def get_user_by_id(user_id):
     return db.collection('users')\
         .document(user_id).get()
@@ -28,7 +29,7 @@ def get_user(user_name):
             return db.collection('users')\
                 .document(user_id).get()
         else:
-            return 
+            return
 
 
 def get_todos(user_id) -> list:
@@ -38,9 +39,25 @@ def get_todos(user_id) -> list:
         .collection('todos').get()
 
 
+def put_todo(user_id, description) -> None:
+    """Recibe el id del usuario y el todo, para guardarlo en la bd"""
+
+    todos_collection_ref = db.collection('users')\
+        .document(user_id)\
+        .collection('todos')
+    
+    # add genera un id aleatorio en firebase
+    todos_collection_ref.add(
+        {
+            'descriptions': description
+        }
+    )
+
+
 # Agrega un nuevo usuario
 def user_put(user_data) -> None:
     """ Recibe UserData, extaer los datos del usuario y los envia a la base de datos """
+
     user_ref = db.collection('users').document(user_data.user_id)
     user_ref.set(
         {

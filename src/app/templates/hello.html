@@ -9,24 +9,32 @@ Bienvenido
 {% block content %}
 
 {% if username %}
-<h1 class="title">
-    Bienvenido, {{ username | capitalize }}
-</h1>
+
+<div class="control">
+    <h1 class="title">
+        Bienvenido, {{ username | capitalize }}
+    </h1>
+</div>
+
 {% else %}
 
 {% endif %}
 
-{% if userIp %}
-<h1>
-    Tu ip es : {{ userIp }}
-</h1>
-{% else %}
-<h1>
-    No hay ip <a href="{{ url_for('index')}}" class="is-link">Iniciar sesión</a>
-</h1>
-{% endif %}
 <br>
+<form action="{{ url_for('hello') }}" method="POST">
+    <div class="field">
+        <label class="label">Agregar una tarea</label>
+        <div class="control">
 
+            {{ todo_form.description(class='input', placeholder='Descripción') }}
+
+        </div>
+    </div>
+
+    <div class="control">
+        {{ todo_form.submit(class="button is-primary") }}
+    </div>
+</form>
 <br>
 <ul>
     {% for todo in todos %}
