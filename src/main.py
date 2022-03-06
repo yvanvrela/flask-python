@@ -3,10 +3,10 @@ from flask import(
     flash, make_response, redirect, render_template, url_for
 )
 from app import create_app
-from app.firestone_service import get_todos, put_todo
+from app.firestone_service import delete_todo, get_todos, put_todo
 from flask_login import login_required, current_user
 
-from app.forms import TodoForm
+from app.forms import TodoForm, DeleteTodoForm
 
 
 app = create_app()
@@ -51,12 +51,14 @@ def hello():
     user_id = current_user.id
     username = current_user.username
     todo_form = TodoForm()
+    delete_todo = DeleteTodoForm()
 
     # Diccionario de retorno de los datos a la pagina
     context = {
         'todos': get_todos(user_id),  # lista de tareas
         'username': username,
-        'todo_form': todo_form
+        'todo_form': todo_form,
+        'delete_todo': delete_todo,
     }
 
     if todo_form.validate_on_submit():
@@ -69,6 +71,12 @@ def hello():
     # doble asterisco expande todas las variables
     return render_template('hello.html', **context)
 
+
+@app.route('/todos/delete/<todo_id>', methods=['POST'])
+def delete(todo_id):
+    user_id = current_user.id
+    delete_todo(user_id=user_id, todo_id=todo_id)
+    return redirect(url_for('hello'))
 
 # # Debug del servidor
 # if __name__ == '__main__':

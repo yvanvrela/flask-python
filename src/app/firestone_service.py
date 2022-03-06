@@ -45,13 +45,23 @@ def put_todo(user_id, description) -> None:
     todos_collection_ref = db.collection('users')\
         .document(user_id)\
         .collection('todos')
-    
+
     # add genera un id aleatorio en firebase
     todos_collection_ref.add(
         {
-            'descriptions': description
+            'descriptions': description,
+            'done': False
         }
     )
+
+
+def delete_todo(user_id, todo_id):
+    todo_ref = db.document(f'users/{user_id}/todos/{todo_id}')
+    todo_ref.delete()
+    # todo_ref = db.collection('users')\
+    #     .document(user_id)\
+    #     .collection('todos')\
+    #     .document(todo_id)
 
 
 # Agrega un nuevo usuario

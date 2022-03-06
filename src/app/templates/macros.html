@@ -1,7 +1,20 @@
-{% macro render_todo(todo) %}
+{% macro render_todo(todo, delete_todo) %}
 <div class="content">
     <ul>
-        <li>Descripción: {{ todo.to_dict().descriptions }}</li>
+        <li>
+            <form action="{{ url_for('delete', todo_id=todo.id) }}" method="POST">
+                <div class="content">
+            
+                    {{ todo.to_dict().descriptions }}
+                    <span class="button is-small is-rounded ml-2">
+                        {{todo.to_dict().done}}
+                    </span>
+
+                    {{ delete_todo.submit(class='button is-small is-rounded is-danger ') }}
+
+                </div>
+            </form>
+        </li>
     </ul>
 </div>
 {% endmacro %}

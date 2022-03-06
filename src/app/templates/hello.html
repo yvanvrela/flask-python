@@ -38,7 +38,7 @@ Bienvenido
 <br>
 <ul>
     {% for todo in todos %}
-    {{ macros.render_todo(todo) }}
+    {{ macros.render_todo(todo, delete_todo) }}
     {% endfor %}
 </ul>
 
