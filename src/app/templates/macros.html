@@ -1,14 +1,27 @@
-{% macro render_todo(todo, delete_todo) %}
+{% macro render_todo(todo, delete_todo, update_todo) %}
 <div class="content">
     <ul>
         <li>
             <form action="{{ url_for('delete', todo_id=todo.id) }}" method="POST">
                 <div class="content">
-            
-                    {{ todo.to_dict().descriptions }}
-                    <span class="button is-small is-rounded ml-2">
-                        {{todo.to_dict().done}}
-                    </span>
+
+                    {{ todo.to_dict().descriptions }} 
+
+                    <a href="{{ url_for('update', todo_id=todo.id, done=todo.to_dict().done) }}">
+                        {% if todo.to_dict().done %}
+                        <span class="button is-small is-success is-rounded ml-2">
+                            <!-- {{todo.to_dict().done}} -->
+                            Terminado
+                        </span>
+
+                        {% else %}
+                        <span class="button is-small is-warning is-rounded ml-2">
+                            <!-- {{todo.to_dict().done}} -->
+                            Pendiente
+                        </span>
+
+                        {% endif %}
+                    </a>
 
                     {{ delete_todo.submit(class='button is-small is-rounded is-danger ') }}
 

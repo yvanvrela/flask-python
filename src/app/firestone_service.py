@@ -55,13 +55,15 @@ def put_todo(user_id, description) -> None:
     )
 
 
+def update_todo(user_id, todo_id, done):
+    done_form = not bool(done)  # Recibe un numero y pasa a boleano
+    todo_ref = _get_todo_ref(user_id, todo_id)
+    todo_ref.update({'done': done_form})
+
+
 def delete_todo(user_id, todo_id):
-    todo_ref = db.document(f'users/{user_id}/todos/{todo_id}')
+    todo_ref = _get_todo_ref(user_id, todo_id)
     todo_ref.delete()
-    # todo_ref = db.collection('users')\
-    #     .document(user_id)\
-    #     .collection('todos')\
-    #     .document(todo_id)
 
 
 # Agrega un nuevo usuario
@@ -75,3 +77,8 @@ def user_put(user_data) -> None:
             'password': user_data.password
         }
     )
+
+
+def _get_todo_ref(user_id, todo_id):
+    ref = db.document(f'users/{user_id}/todos/{todo_id}')
+    return ref

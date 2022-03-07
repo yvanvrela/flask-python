@@ -3,10 +3,10 @@ from flask import(
     flash, make_response, redirect, render_template, url_for
 )
 from app import create_app
-from app.firestone_service import delete_todo, get_todos, put_todo
+from app.firestone_service import delete_todo, get_todos, put_todo, update_todo
 from flask_login import login_required, current_user
 
-from app.forms import TodoForm, DeleteTodoForm
+from app.forms import TodoForm, DeleteTodoForm, UpdateTodoForm
 
 
 app = create_app()
@@ -52,6 +52,7 @@ def hello():
     username = current_user.username
     todo_form = TodoForm()
     delete_todo = DeleteTodoForm()
+    update_todo = UpdateTodoForm()
 
     # Diccionario de retorno de los datos a la pagina
     context = {
@@ -59,6 +60,7 @@ def hello():
         'username': username,
         'todo_form': todo_form,
         'delete_todo': delete_todo,
+        'update_todo': update_todo,
     }
 
     if todo_form.validate_on_submit():
@@ -76,6 +78,16 @@ def hello():
 def delete(todo_id):
     user_id = current_user.id
     delete_todo(user_id=user_id, todo_id=todo_id)
+
+    return redirect(url_for('hello'))
+
+
+@app.route('/todos/update/<todo_id>/<int:done>', methods=['POST', 'GET'])
+def update(todo_id, done):
+    user_id = current_user.id
+
+    update_todo(user_id=user_id, todo_id=todo_id, done=done)
+
     return redirect(url_for('hello'))
 
 # # Debug del servidor
