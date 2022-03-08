@@ -8,21 +8,19 @@ Bienvenido
 
 {% block content %}
 
-{% if username %}
 
-<div class="control">
-    <h1 class="title">
-        Bienvenido, {{ username | capitalize }}
-    </h1>
-</div>
+<div class="container column is-8">
+    {% if username %}
 
-{% else %}
+    <div class="content">
+        <h1>
+            Bienvenido! {{ username | capitalize }}
+        </h1>
+    </div>
 
-{% endif %}
+    {% else %}
 
-<br>
-<div class="container">
-
+    {% endif %}
     <form action="{{ url_for('hello') }}" method="POST">
         <div class="field">
             <label class="label">Agregar una tarea</label>
@@ -32,15 +30,20 @@ Bienvenido
         </div>
 
         <div class="control">
-            {{ todo_form.submit(class="button is-primary") }}
+            {{ todo_form.submit(class="button is-sent-btn has-text-light") }}
         </div>
     </form>
-    <br>
-    <ul>
-        {% for todo in todos %}
-        {{ macros.render_todo(todo, delete_todo, update_todo) }}
-        {% endfor %}
-    </ul>
+
+    <div class="content pt-6">
+        <h2>
+            Tareas
+        </h2>
+        <ul>
+            {% for todo in todos %}
+            {{ macros.render_todo(todo, delete_todo, update_todo) }}
+            {% endfor %}
+        </ul>
+    </div>
 </div>
 
 {% endblock %}

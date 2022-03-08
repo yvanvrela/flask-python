@@ -8,15 +8,15 @@ class LoginForm(FlaskForm):
     username = StringField('Nombre de usuario', validators=[
                            DataRequired()])  # Validar los datos
     password = PasswordField('Password', validators=[DataRequired()])
-    submit = SubmitField('Enviar')
+    submit = SubmitField('Ingresar')
 
 
 class TodoForm(FlaskForm):
     description = StringField('Descripción', validators=[DataRequired()])
-    submit = SubmitField('Crear')
+    submit = SubmitField('Agregar')
 
 class DeleteTodoForm(FlaskForm):
-    submit = SubmitField('Borrar')
+    submit = SubmitField()
 
 
 class UpdateTodoForm(FlaskForm):
