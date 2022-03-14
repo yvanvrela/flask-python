@@ -5,69 +5,40 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/css/main.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <link rel="stylesheet" href="../static/css/main.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
     <script src="../static/js/scripts.js"></script>
     <title>
         {% block title %}
-        Flask |
+        PyTask |
         {% endblock %}
     </title>
 </head>
 
 <body>
-    <section class="hero is-light is-large">
-        <div class="hero-head">
+    <section class="hero is-large">
+        <div class="hero-head navbar-background">
             {% include 'navbar.html'  %}
         </div>
 
         {% for message in get_flashed_messages() %}
         <br>
 
-        {% if message == 'Nombre de usuario guardado!' %}
-
         <div class="notification is-primary">
             <button class="delete"></button>
             {{ message }}
         </div>
 
-        {% endif %}
 
         {% endfor %}
 
-        <div class="hero-body has-background-light">
-            <div class="container">
-                {% block content %}
-                {% endblock %}
-            </div>
-        </div>
+        <div class="hero-body">
 
-        <div class="hero-foot has-background-black-bis">
-            <nav class="tabs is-boxed is-fullwidth">
-                <div class="container has-text-light">
-                    <ul>
-                        <li class="is-active">
-                            <a>Overview</a>
-                        </li>
-                        <li>
-                            <a>Modifiers</a>
-                        </li>
-                        <li>
-                            <a>Grid</a>
-                        </li>
-                        <li>
-                            <a>Elements</a>
-                        </li>
-                        <li>
-                            <a>Components</a>
-                        </li>
-                        <li>
-                            <a>Layout</a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
+            {% block content %}
+
+            {% endblock %}
+
         </div>
     </section>
 </body>

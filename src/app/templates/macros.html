@@ -1,3 +1,54 @@
-{% macro render_todo(todo) %}
-<li>Descripción: {{ todo.to_dict().descriptions }}</li>
+{% macro render_todo(todo, delete_todo, update_todo) %}
+
+<li>
+    <div class="">
+
+        <span class="tag is-medium has-background-white">
+
+            {{ todo.to_dict().descriptions }}
+
+            <a class="ml-5" href="{{ url_for('update', todo_id=todo.id, done=todo.to_dict().done) }}">
+                {% if todo.to_dict().done %}
+                <!-- <span class="button is-small is-success is-light is-rounded ml-2">
+                                 {{todo.to_dict().done}} 
+                                Terminado
+
+                            </span> -->
+
+                <div class="icon-text">
+                    <span class="icon has-text-success">
+                        <i class="fas fa-check-circle fa-lg"></i>
+                    </span>
+                </div>
+
+                {% else %}
+                <!-- <span class="button is-small is-warning is-rounded ml-2">
+                                 {{todo.to_dict().done}} 
+                                Pendiente
+                            </span> -->
+                <div class="icon-text">
+                    <span class="icon has-text-primary">
+                        <i class="far fa-circle fa-lg"></i>
+                    </span>
+                </div>
+
+                {% endif %}
+            </a>
+
+            <!-- {{ delete_todo.submit(class='button is-small is-rounded is-danger ') }} -->
+            <a class="ml-4" href="{{ url_for('delete', todo_id=todo.id) }}">
+                <div class="icon-text">
+                    <span class="icon has-text-grey">
+                        <i class="fas fa-times-circle fa-lg"></i>
+                    </span>
+                </div>
+            </a>
+
+
+        </span>
+    </div>
+
+</li>
+
+
 {% endmacro %}

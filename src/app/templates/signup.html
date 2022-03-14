@@ -1,0 +1,46 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+{{ super() }}
+Signup
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+    <h1 class="title">
+        Registrarse
+    </h1>
+
+    <form action="{{ url_for('auth.signup') }}" method="POST">
+
+        <div class="field">
+
+            <p class="control has-icons-left has-icons-right">
+
+                {{ signup_form.username(class='input', placeholder='Usuario') }}
+
+                <span class="icon is-small is-left">
+                    <i class="fas fa-user"></i>
+                </span>
+            </p>
+        </div>
+
+        <div class="field">
+            <p class="control has-icons-left">
+
+                {{ signup_form.password(class='input', placeholder='Contraseña') }}
+
+                <span class="icon is-small is-left">
+                    <i class="fas fa-lock"></i>
+                </span>
+            </p>
+        </div>
+
+        {{ signup_form.submit(class="button is-link") }}
+
+    </form>
+</div>
+
+{% endblock %}
