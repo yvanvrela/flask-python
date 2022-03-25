@@ -36,7 +36,7 @@ def get_todos(user_id) -> list:
     """ Recibe el id, y devuelve todas las tareas """
     return db.collection('users')\
         .document(user_id)\
-        .collection('todos').get()
+        .collection('todos').order_by('done').get()
 
 
 def put_todo(user_id, description) -> None:

@@ -5,15 +5,19 @@
 
         <span class="tag is-medium has-background-white">
 
+            {% if todo.to_dict().done %}
+            <!-- Rayar el texto -->
+            <del> {{ todo.to_dict().descriptions }} </del> 
+
+            {% else %}
+
             {{ todo.to_dict().descriptions }}
 
-            <a class="ml-5" href="{{ url_for('update', todo_id=todo.id, done=todo.to_dict().done) }}">
-                {% if todo.to_dict().done %}
-                <!-- <span class="button is-small is-success is-light is-rounded ml-2">
-                                 {{todo.to_dict().done}} 
-                                Terminado
+            {% endif %}
 
-                            </span> -->
+            <a class="ml-5" href="{{ url_for('update', todo_id=todo.id, done=todo.to_dict().done) }}">
+
+                {% if todo.to_dict().done %}
 
                 <div class="icon-text">
                     <span class="icon has-text-success">
@@ -22,10 +26,7 @@
                 </div>
 
                 {% else %}
-                <!-- <span class="button is-small is-warning is-rounded ml-2">
-                                 {{todo.to_dict().done}} 
-                                Pendiente
-                            </span> -->
+
                 <div class="icon-text">
                     <span class="icon has-text-primary">
                         <i class="far fa-circle fa-lg"></i>

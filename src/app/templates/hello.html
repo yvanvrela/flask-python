@@ -9,40 +9,51 @@ Bienvenido
 {% block content %}
 
 
-<div class="container column is-8">
-    {% if username %}
+<div class="container column is-12">
+    <div class="container column is-6">
+        {% if username %}
 
-    <div class="content">
-        <h1>
-            Bienvenido! {{ username | capitalize }}
-        </h1>
-    </div>
+        <div class="content">
+            <h1>
+                ¡Bienvenido, {{ username | capitalize }}!
+            </h1>
+        </div>
 
-    {% else %}
+        {% endif %}
 
-    {% endif %}
-    <form action="{{ url_for('hello') }}" method="POST">
-        <div class="field">
-            <label class="label">Agregar una tarea</label>
-            <div class="control">
-                {{ todo_form.description(class='input', type='text', placeholder='Descripción') }}
+        <form action="{{ url_for('hello') }}" method="POST">
+            <div class="field">
+                <label class="label">Agregar una tarea</label>
+                <div class="control">
+                    {{ todo_form.description(class='input', type='text', placeholder='Descripción', autocomplete='off') }}
+                </div>
             </div>
-        </div>
 
-        <div class="control">
-            {{ todo_form.submit(class="button is-sent-btn has-text-light") }}
-        </div>
-    </form>
+            <div class="control">
+                {{ todo_form.submit(class="button is-sent-btn has-text-light") }}
+            </div>
+        </form>
 
-    <div class="content pt-6">
-        <h2>
-            Tareas
-        </h2>
-        <ul>
-            {% for todo in todos %}
-            {{ macros.render_todo(todo, delete_todo, update_todo) }}
-            {% endfor %}
-        </ul>
+        <div class="content pt-6">
+            <h2>
+                Tareas
+            </h2>
+
+            {% if todos %}
+
+            <ul>
+                {% for todo in todos %}
+                {{ macros.render_todo(todo, delete_todo, update_todo) }}
+                {% endfor %}
+            </ul>
+
+            {% else %}
+
+            <p class="subtitle">
+                No tienes ninguna tarea!
+            </p>
+            {% endif %}
+        </div>
     </div>
 </div>
 
